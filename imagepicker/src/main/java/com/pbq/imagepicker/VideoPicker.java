@@ -29,6 +29,9 @@ import java.util.Locale;
 public class VideoPicker {
 
     public static final String TAG = VideoPicker.class.getSimpleName();
+    /**
+     * 录像的结果请求
+     */
     public static final int REQUEST_VIDEO_TAKE = 1001;
     /**
      * 请求视频预览
@@ -138,7 +141,7 @@ public class VideoPicker {
     public ArrayList<VideoItem> getCurrentVideoFolderItems() {
         return mVideoFolders.get(mCurrentVideoFolderPosition).videos;
     }
-
+    /** 是否选中该视频 checkbox*/
     public boolean isSelect(VideoItem item) {
         return mSelectedVideos.contains(item);
     }
@@ -153,7 +156,7 @@ public class VideoPicker {
     public ArrayList<VideoItem> getSelectedVideos() {
         return mSelectedVideos;
     }
-
+    /** 清除选中的视频 */
     public void clearSelectedVideos() {
         if (mSelectedVideos != null) mSelectedVideos.clear();
     }

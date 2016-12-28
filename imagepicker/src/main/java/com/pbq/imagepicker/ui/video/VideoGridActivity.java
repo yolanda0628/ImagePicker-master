@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -23,7 +24,12 @@ import com.pbq.imagepicker.bean.VideoFolder;
 import com.pbq.imagepicker.bean.VideoItem;
 import com.pbq.imagepicker.ui.image.ImageBaseActivity;
 import com.pbq.imagepicker.view.FolderPopUpWindow;
+import com.pbq.imagepicker.view.SuperCheckBox;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.path;
 
 /**
  * 视频的加载界面   注意 视频选择不需要剪裁
@@ -262,20 +268,21 @@ public class VideoGridActivity extends ImageBaseActivity implements VideoDataSou
                     finish();
                 }
             }
-        } else {
-            //如果是裁剪，因为裁剪指定了存储的Uri，所以返回的data一定为null
-            if (resultCode == RESULT_OK && requestCode == VideoPicker.REQUEST_VIDEO_TAKE) {
-                //发送广播通知视频增加了
-                VideoPicker.galleryAddPic(this, videoPicker.getTakeVideoFile());
-                VideoItem videoItem = new VideoItem();
-                videoItem.path = videoPicker.getTakeVideoFile().getAbsolutePath();
-                videoPicker.clearSelectedVideos();
-                videoPicker.addSelectedVideoItem(0, videoItem, true);
-                Intent intent = new Intent();
-                intent.putExtra(VideoPicker.EXTRA_RESULT_VIDEO_ITEMS, videoPicker.getSelectedVideos());
-                setResult(VideoPicker.RESULT_VIDEO_ITEMS, intent);   //单选不需要裁剪，返回数据
-                finish();
-            }
+        }
+        //录像的结果返回事件
+        if (resultCode == RESULT_OK && requestCode == VideoPicker.REQUEST_VIDEO_TAKE) {
+            //发送广播通知视频增加了
+            VideoPicker.galleryAddPic(this, videoPicker.getTakeVideoFile());
+            VideoItem videoItem = new VideoItem();
+            videoItem.path = videoPicker.getTakeVideoFile().getAbsolutePath();
+            videoPicker.clearSelectedVideos();
+            //添加选中这个录像视频
+            videoPicker.addSelectedVideoItem(0, videoItem, true);
+            //更新界面设置录像的这个视频为选中状态  在Adapter中使用接口实现
+            Intent intent = new Intent();
+            intent.putExtra(VideoPicker.EXTRA_RESULT_VIDEO_ITEMS, videoPicker.getSelectedVideos());
+            setResult(VideoPicker.RESULT_VIDEO_ITEMS, intent);   //单选不需要裁剪，返回数据
+            finish();
         }
     }
 }

@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
+import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.VideoPicker;
 import com.pbq.imagepicker.bean.VideoItem;
@@ -133,6 +134,7 @@ public class VideoGridAdapter extends BaseAdapter {
 
             //显示时长 转化成分秒
             holder.tv_timelong.setText(videoPicker.timeParse(videoItem.timeLong));
+
             //视频的选择
             holder.cbCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,8 +169,13 @@ public class VideoGridAdapter extends BaseAdapter {
                 //单选的话直接隐藏多选框
                 holder.cbCheck.setVisibility(View.GONE);
             }
-            Glide.with(mActivity).load(videoItem.path).placeholder(com.pbq.imagepicker.R.mipmap.default_image).into(holder.ivThumb);
-//            videoPicker.getVideoLoader().displayVideo(mActivity, videoItem.path, holder.ivThumb, mVideoSize, mVideoSize); //显示视频
+
+            if(videoPicker.isSelect(videoItem)){
+                holder.mask.setVisibility(View.VISIBLE);
+                holder.cbCheck.setChecked(true);
+            }
+            Glide.with(mActivity).load(videoItem.path).placeholder(R.mipmap.default_image).into(holder.ivThumb);
+//            videoPicker.getVideoLoader().displayImage(mActivity, videoItem.path, holder.ivThumb, mVideoSize, mVideoSize); //显示视频
         }
         return convertView;
     }

@@ -2,9 +2,11 @@ package com.pbq.imagepickerdemo;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -13,7 +15,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -36,6 +40,8 @@ import com.pbq.imagepickerdemo.wxdemo.WxDemoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.button;
 
 /**
  * ================================================
@@ -169,9 +175,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 break;
             case R.id.btn_open_video:
                 videoPicker = VideoPicker.getInstance();
+                imagePicker.setImageLoader(new GlideImageLoader());
                 if (rb_single_select.isChecked()) videoPicker.setMultiMode(false);
                 else if (rb_muti_select.isChecked()) videoPicker.setMultiMode(true);
-                imagePicker.setImageLoader(new GlideImageLoader());
                 videoPicker.setShowCamera(true);
                 Intent i1 = new Intent(this, VideoGridActivity.class);
                 startActivityForResult(i1, 300);
@@ -306,20 +312,42 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
+        public View getView(final int position, View convertView, ViewGroup parent) {
             int size = gridView.getWidth() / 3;
-            if (convertView == null) {
-                imageView = new ImageView(ImagePickerActivity.this);
-                AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size);
-                imageView.setLayoutParams(params);
-                imageView.setBackgroundColor(Color.parseColor("#88888888"));
-            } else {
-                imageView = (ImageView) convertView;
-            }
+            FrameLayout layout= new FrameLayout(ImagePickerActivity.this);//定义框架布局器
+
+            ImageView imageView = new ImageView(ImagePickerActivity.this);
+            FrameLayout.LayoutParams abParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, size);
+            imageView.setLayoutParams(abParams);
+            imageView.setBackgroundColor(Color.parseColor("#88888888"));
+
+            ImageButton btnPlay=new ImageButton(ImagePickerActivity.this);
+            btnPlay.setBackgroundResource(R.mipmap.play);
+            FrameLayout.LayoutParams bparams=new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);//定义显示组件参数
+            //此处相当于布局文件中的Android:layout_gravity属性
+            bparams.gravity = Gravity.CENTER;
+            btnPlay.setLayoutParams(bparams);
+
+            layout.addView(imageView, abParams);//添加组件
+            layout.addView(btnPlay, bparams);
+
 //            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
             Glide.with(ImagePickerActivity.this).load(getItem(position).path).placeholder(R.mipmap.default_image).into(imageView);
-            return imageView;
+            /**
+             * 点击播放播放视频
+             */
+            btnPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri uri = Uri.parse(getItem(position).path);
+                    //调用系统自带的播放器
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(uri, "video/mp4");
+                    startActivity(intent);
+                }
+            });
+            return layout;
         }
     }
 }
