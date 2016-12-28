@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pbq.imagepicker.ImagePicker;
 import com.pbq.imagepicker.VideoPicker;
 import com.pbq.imagepicker.bean.ImageItem;
@@ -82,6 +83,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
         imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
+        videoPicker = VideoPicker.getInstance();
 
         rb_uil = (RadioButton) findViewById(R.id.rb_uil);
         rb_glide = (RadioButton) findViewById(R.id.rb_glide);
@@ -174,11 +176,8 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 startActivity(new Intent(this, WxDemoActivity.class));
                 break;
             case R.id.btn_open_video:
-                videoPicker = VideoPicker.getInstance();
-                imagePicker.setImageLoader(new GlideImageLoader());
                 if (rb_single_select.isChecked()) videoPicker.setMultiMode(false);
                 else if (rb_muti_select.isChecked()) videoPicker.setMultiMode(true);
-                videoPicker.setShowCamera(true);
                 Intent i1 = new Intent(this, VideoGridActivity.class);
                 startActivityForResult(i1, 300);
                 break;
@@ -190,6 +189,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         switch (buttonView.getId()) {
             case R.id.cb_show_camera:
                 imagePicker.setShowCamera(isChecked);
+                videoPicker.setShowCamera(isChecked);
                 break;
             case R.id.cb_crop:
                 imagePicker.setCrop(isChecked);
@@ -204,6 +204,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         tv_select_limit.setText(String.valueOf(progress));
         imagePicker.setSelectLimit(progress);
+        videoPicker.setSelectLimit(progress);
     }
 
     @Override
@@ -331,9 +332,11 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
             layout.addView(imageView, abParams);//添加组件
             layout.addView(btnPlay, bparams);
-
-//            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
-            Glide.with(ImagePickerActivity.this).load(getItem(position).path).placeholder(R.mipmap.default_image).into(imageView);
+//            videoPicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
+            Glide.with(ImagePickerActivity.this)
+                    .load(getItem(position).path)
+                    .placeholder(R.mipmap.default_image)
+                    .into(imageView);
             /**
              * 点击播放播放视频
              */

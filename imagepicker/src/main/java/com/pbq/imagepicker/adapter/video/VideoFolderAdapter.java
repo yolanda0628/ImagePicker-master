@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.VideoPicker;
@@ -78,8 +79,10 @@ public class VideoFolderAdapter extends BaseAdapter {
         VideoFolder folder = getItem(position);
         holder.folderName.setText(folder.name);
         holder.videoCount.setText(mActivity.getString(R.string.folder_image_count, folder.videos.size()));
-//        videoPicker.getVideoLoader().displayImage(mActivity, folder.cover.path, holder.cover, mVideoSize, mVideoSize);
-        Glide.with(mActivity).load(folder.cover.path).placeholder(R.mipmap.default_image).into(holder.cover);
+        Glide.with(mActivity)
+                .load(folder.cover.path)
+                .placeholder(R.mipmap.default_image)
+                .into(holder.cover);
         /**
          * 选中文件夹标记可见
          */

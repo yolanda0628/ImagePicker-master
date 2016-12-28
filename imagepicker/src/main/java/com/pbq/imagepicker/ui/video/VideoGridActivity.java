@@ -86,6 +86,7 @@ public class VideoGridActivity extends ImageBaseActivity implements VideoDataSou
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                //加载手机中的视频数据
                 new VideoDataSource(this, null, this);
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);

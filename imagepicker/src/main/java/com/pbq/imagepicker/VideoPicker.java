@@ -114,11 +114,11 @@ public class VideoPicker {
         return takeVideoFile;
     }
 
-    public ImageLoader getVideoLoader() {
+    public ImageLoader getImageLoader() {
         return imageLoader;
     }
 
-    public void setVideoLoader(ImageLoader imageLoader) {
+    public void setImageLoader(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
     }
     public List<VideoFolder> getVideoFolders() {

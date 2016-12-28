@@ -6,7 +6,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pbq.imagepicker.ImagePicker;
+import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.bean.ImageItem;
 

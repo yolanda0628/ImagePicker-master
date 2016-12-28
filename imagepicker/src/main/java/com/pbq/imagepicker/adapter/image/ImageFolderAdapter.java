@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pbq.imagepicker.ImagePicker;
 import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
@@ -80,7 +82,6 @@ public class ImageFolderAdapter extends BaseAdapter {
         holder.folderName.setText(folder.name);
         holder.imageCount.setText(mActivity.getString(R.string.folder_image_count, folder.images.size()));
         imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
-
         if (lastSelected == position) {
             holder.folderCheck.setVisibility(View.VISIBLE);
         } else {

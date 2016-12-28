@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.VideoPicker;
@@ -174,8 +175,10 @@ public class VideoGridAdapter extends BaseAdapter {
                 holder.mask.setVisibility(View.VISIBLE);
                 holder.cbCheck.setChecked(true);
             }
-            Glide.with(mActivity).load(videoItem.path).placeholder(R.mipmap.default_image).into(holder.ivThumb);
-//            videoPicker.getVideoLoader().displayImage(mActivity, videoItem.path, holder.ivThumb, mVideoSize, mVideoSize); //显示视频
+            Glide.with(mActivity)
+                    .load(videoItem.path)
+                    .placeholder(R.mipmap.default_image)
+                    .into(holder.ivThumb);
         }
         return convertView;
     }

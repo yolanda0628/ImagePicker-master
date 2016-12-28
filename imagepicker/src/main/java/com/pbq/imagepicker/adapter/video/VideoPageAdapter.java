@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.VideoPicker;
 import com.pbq.imagepicker.bean.VideoItem;
@@ -70,8 +72,10 @@ public class VideoPageAdapter extends PagerAdapter {
         ImageView imageview = (ImageView) view.findViewById(com.pbq.imagepicker.R.id.imageview);
         ImageButton btnPlay = (ImageButton) view.findViewById(com.pbq.imagepicker.R.id.btn_play);
         final VideoItem videoItem = videos.get(position);
-//        videoPicker.getVideoLoader().displayImage(mActivity, videoItem.path, imageview, screenWidth, screenHeight);
-        Glide.with(mActivity).load(videoItem.path).placeholder(com.pbq.imagepicker.R.mipmap.default_image).into(imageview);
+        Glide.with(mActivity)
+                .load(videoItem.path)
+                .placeholder(R.mipmap.default_image)
+                .into(imageview);
         /**
          * 点击播放播放视频
          */
