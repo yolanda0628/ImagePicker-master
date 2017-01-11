@@ -69,7 +69,7 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity {
         mAdapter = new ImagePageAdapter(this, mImageItems);
         mAdapter.setPhotoViewClickListener(new ImagePageAdapter.PhotoViewClickListener() {
             @Override
-            public void OnPhotoTapListener(View view, float v, float v1) {
+            public void OnPhotoTapListener(View view) {
                 onImageSingleTap();
             }
         });

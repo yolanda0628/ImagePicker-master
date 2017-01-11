@@ -5,18 +5,11 @@ import android.support.v4.view.PagerAdapter;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import android.widget.ImageView;
 import com.pbq.imagepicker.ImagePicker;
-import com.pbq.imagepicker.R;
 import com.pbq.imagepicker.Utils;
 import com.pbq.imagepicker.bean.ImageItem;
-
 import java.util.ArrayList;
-
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * ================================================
@@ -56,13 +49,25 @@ public class ImagePageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        PhotoView photoView = new PhotoView(mActivity);
+//        PhotoView photoView = new PhotoView(mActivity);
+//        ImageItem imageItem = images.get(position);
+//        imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, photoView, screenWidth, screenHeight);
+//        photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+//            @Override
+//            public void onPhotoTap(View view, float x, float y) {
+//                if (listener != null) listener.OnPhotoTapListener(view, x, y);
+//            }
+//        });
+//        container.addView(photoView);
+//        return photoView;
+
+        ImageView photoView = new ImageView(mActivity);
         ImageItem imageItem = images.get(position);
         imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, photoView, screenWidth, screenHeight);
-        photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+        photoView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPhotoTap(View view, float x, float y) {
-                if (listener != null) listener.OnPhotoTapListener(view, x, y);
+            public void onClick(View view) {
+                if (listener != null) listener.OnPhotoTapListener(view);
             }
         });
         container.addView(photoView);
@@ -90,6 +95,6 @@ public class ImagePageAdapter extends PagerAdapter {
     }
 
     public interface PhotoViewClickListener {
-        void OnPhotoTapListener(View view, float v, float v1);
+        void OnPhotoTapListener(View view);
     }
 }
