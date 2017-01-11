@@ -178,6 +178,8 @@ public class VideoGridAdapter extends BaseAdapter {
             Glide.with(mActivity)
                     .load(videoItem.path)
                     .placeholder(R.mipmap.default_image)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(holder.ivThumb);
         }
         return convertView;

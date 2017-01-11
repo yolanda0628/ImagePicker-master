@@ -75,6 +75,8 @@ public class VideoPageAdapter extends PagerAdapter {
         Glide.with(mActivity)
                 .load(videoItem.path)
                 .placeholder(R.mipmap.default_image)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imageview);
         /**
          * 点击播放播放视频

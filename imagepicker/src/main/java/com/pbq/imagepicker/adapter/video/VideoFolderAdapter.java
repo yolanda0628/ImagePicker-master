@@ -82,6 +82,8 @@ public class VideoFolderAdapter extends BaseAdapter {
         Glide.with(mActivity)
                 .load(folder.cover.path)
                 .placeholder(R.mipmap.default_image)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.cover);
         /**
          * 选中文件夹标记可见

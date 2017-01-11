@@ -27,7 +27,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 //版本
-version = "1.0.0"
+version = "1.1.0"
 
 // 定义两个链接，下面会用到。
 def siteUrl = 'https://github.com/pbq18785109289/ImagePicker-master' // 项目主页。

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-
 import com.pbq.imagepicker.ImageDataSource;
 import com.pbq.imagepicker.ImagePicker;
 import com.pbq.imagepicker.adapter.image.ImageFolderAdapter;

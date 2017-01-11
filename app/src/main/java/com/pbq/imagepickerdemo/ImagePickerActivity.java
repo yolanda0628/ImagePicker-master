@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -82,7 +83,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         setContentView(R.layout.activity_image_picker);
 
         imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setImageLoader(new UILImageLoader());
         videoPicker = VideoPicker.getInstance();
 
         rb_uil = (RadioButton) findViewById(R.id.rb_uil);
@@ -168,7 +169,6 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
                 imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
                 imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
-
                 Intent intent = new Intent(this, ImageGridActivity.class);
                 startActivityForResult(intent, 100);
                 break;
@@ -336,6 +336,8 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
             Glide.with(ImagePickerActivity.this)
                     .load(getItem(position).path)
                     .placeholder(R.mipmap.default_image)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(imageView);
             /**
              * 点击播放播放视频

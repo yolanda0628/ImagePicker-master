@@ -1,7 +1,9 @@
 package com.pbq.imagepickerdemo.imageloader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -28,11 +30,12 @@ public class GlideImageLoader implements ImageLoader {
                 .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
                 .error(R.mipmap.default_image)           //设置错误图片
                 .placeholder(R.mipmap.default_image)     //设置占位图片
-                .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存全尺寸 加载视频时去掉
+                .diskCacheStrategy( DiskCacheStrategy.NONE )
+                .skipMemoryCache(true)
                 .into(imageView);
     }
 
     @Override
-    public void clearMemoryCache() {
+    public void clearMemoryCache(Activity activity) {
     }
 }
